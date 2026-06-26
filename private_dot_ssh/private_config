@@ -1,0 +1,21 @@
+Host *
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    TCPKeepAlive yes
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 10m
+
+Host jms
+    HostName jumpserver.yostar.net
+    Port 2222
+    User xutiancheng
+    StrictHostKeyChecking no
+
+Host jms_oversea
+    HostName jumpserver.yo-star.com
+    Port 2222
+    User xutiancheng
+    Compression yes
+    StrictHostKeyChecking no

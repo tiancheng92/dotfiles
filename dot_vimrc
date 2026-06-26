@@ -1,0 +1,51 @@
+" 基础体验
+set nocompatible
+set encoding=utf-8
+set number
+set relativenumber
+set cursorline
+set scrolloff=5
+set wrap
+set showmatch
+
+" 缩进
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set smartindent
+
+" 搜索
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" 界面
+set laststatus=2
+set showcmd
+set wildmenu
+set ruler
+
+" 交互
+set backspace=indent,eol,start
+set clipboard=unnamed
+set mouse=a
+
+" 文件
+set autoread
+set noswapfile
+set nobackup
+
+" 语法高亮
+syntax enable
+filetype plugin indent on
+
+" 清除搜索高亮
+nnoremap <Esc><Esc> :nohlsearch<CR>
+
+" 窗口切换
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
