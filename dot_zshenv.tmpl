@@ -52,6 +52,9 @@ export FZF_ALT_C_OPTS="
 "
 
 
+# zoxide 误报抑制（chezmoi/非交互 shell 触发）
+export _ZO_DOCTOR=0
+
 # Context7
 export CONTEXT7_API_KEY="{{ onepasswordRead "op://Personal/Dev API Keys/Context7 API Key" }}"
 
