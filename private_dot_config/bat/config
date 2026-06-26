@@ -1,0 +1,13 @@
+--theme="Sublime Snazzy"
+
+--style=numbers,changes,header
+
+--pager=never
+
+--italic-text=always
+
+--map-syntax "*.env:Bash"
+--map-syntax "*.env.*:Bash"
+--map-syntax "Dockerfile*:Dockerfile"
+--map-syntax ".zshrc:Bash"
+--map-syntax ".zshenv:Bash"

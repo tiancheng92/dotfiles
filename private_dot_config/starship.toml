@@ -1,0 +1,59 @@
+format = """
+$directory$git_branch$git_status$git_state$git_metrics
+$character"""
+
+right_format = """$nodejs$golang$cmd_duration"""
+
+[directory]
+style = "bold cyan"
+truncation_length = 4
+truncate_to_repo = true
+read_only_style = "red"
+
+[git_branch]
+style = "bold purple"
+truncation_length = 30
+
+[git_status]
+format = '([ \[$all_status$ahead_behind\]]($style))'
+style = "bold yellow"
+staged = "[+${count}](green)"
+modified = "[!${count}](yellow)"
+deleted = "[x${count}](red)"
+renamed = "[>${count}](blue)"
+untracked = "[?${count}](white)"
+stashed = "[=${count}](cyan)"
+ahead = "^${count}"
+behind = "v${count}"
+diverged = "^${ahead_count}v${behind_count}"
+
+[git_state]
+style = "bold red"
+
+[git_metrics]
+added_style = "bold green"
+deleted_style = "bold red"
+disabled = false
+
+[nodejs]
+style = "bold green"
+detect_files = ["package.json", ".nvmrc", ".node-version"]
+detect_folders = ["node_modules"]
+
+[golang]
+style = "bold cyan"
+detect_files = ["go.mod", "go.sum", ".go-version"]
+
+[cmd_duration]
+style = "bold yellow"
+min_time = 500
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[time]
+disabled = true
+
+[package]
+disabled = true

@@ -1,0 +1,10 @@
+--smart-case
+--hidden
+--follow
+--glob=!.git
+--glob=!node_modules
+--glob=!.DS_Store
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!dist/
+--glob=!vendor/

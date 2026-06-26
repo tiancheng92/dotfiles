@@ -1,0 +1,249 @@
+# 历史记录
+HISTFILE="$XDG_STATE_HOME/zsh/history"  # 必须在 .zshrc 设置，否则 /etc/zshrc 会覆盖
+HISTSIZE=100000
+SAVEHIST=100000
+setopt HIST_IGNORE_ALL_DUPS   # 删除历史中所有重复条目
+setopt HIST_IGNORE_SPACE      # 以空格开头的命令不记录
+setopt SHARE_HISTORY          # 多终端共享历史（已包含实时写入）
+setopt HIST_REDUCE_BLANKS     # 保存历史时压缩多余空格
+setopt HIST_VERIFY            # !! 展开后先显示不立即执行，避免误触
+
+# Emacs 行编辑模式（zsh 默认 main=viins，Ctrl+A/E/K 等失效，显式切回 emacs）
+bindkey -e
+
+# 跳词/删词边界：去掉 / = . 让路径分隔符成为词边界
+WORDCHARS='*?_-[]~&;!#$%^(){}<>'
+
+# zsh 行为优化
+setopt AUTO_CD                # 直接输入目录名即可 cd
+unsetopt CORRECT              # 关闭拼写纠错（短 alias 误报太烦）
+setopt AUTO_PUSHD             # cd 自动压栈，可用 popd 回退，dirs -v 查看栈
+setopt PUSHD_IGNORE_DUPS      # 去除目录栈重复
+setopt PUSHD_SILENT           # cd 时不打印目录栈
+setopt EXTENDED_GLOB          # 扩展通配符支持（^、#、~ 等）
+setopt NO_BEEP                # 关闭错误提示音
+setopt INTERACTIVE_COMMENTS   # 交互模式允许 # 注释，方便临时禁用命令
+setopt NO_CASE_GLOB           # glob 不区分大小写
+setopt NUMERIC_GLOB_SORT      # 文件名按数字顺序排序，file10 排在 file9 后
+setopt COMPLETE_IN_WORD       # 光标在词中间也能触发补全
+setopt ALWAYS_TO_END          # 补全后光标自动移到词尾
+setopt GLOB_DOTS              # glob 默认包含点文件，无需显式写 .*
+
+# Zinit — 插件管理器，未安装时自动克隆
+ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
+typeset -A ZINIT
+ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump"  # 必须在 source zinit.zsh 之前设置
+if [[ ! -f "$ZINIT_HOME/zinit.zsh" ]]; then
+    print -P "%F{33}正在安装 Zinit…%f"
+    command mkdir -p "$(dirname $ZINIT_HOME)"
+    command git clone https://github.com/zdharma-continuum/zinit "$ZINIT_HOME" && \
+        print -P "%F{34}安装成功%f" || \
+        print -P "%F{160}安装失败%f"
+fi
+
+source "$ZINIT_HOME/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+ZSH_AUTOSUGGEST_STRATEGY=(atuin completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=200
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-search-down accept-line)
+
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+HISTORY_SUBSTRING_SEARCH_FUZZY=1
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=black,bg=green,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=white,bg=red,bold'
+
+# fzf-tab 必须立即加载（需在 compinit 之后、提示符之前）
+zinit light Aloxaf/fzf-tab
+
+# 其余插件全部懒加载：blockf 让 zinit 接管补全注册，zicompinit 替代手动 compinit
+zinit wait lucid light-mode for \
+  blockf \
+      zsh-users/zsh-completions \
+  atinit'zicompinit; zicdreplay' \
+      zdharma-continuum/fast-syntax-highlighting \
+  atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' \
+      zsh-users/zsh-history-substring-search \
+  atload'_zsh_autosuggest_start' \
+      zsh-users/zsh-autosuggestions \
+      hlissner/zsh-autopair
+
+# fzf — 模糊搜索
+eval "$(/opt/homebrew/bin/fzf --zsh)"
+
+# Ctrl+Delete 删词
+bindkey '^[[3;5~' kill-word
+
+# Ctrl+Y 复制最近一条匹配的历史命令到剪贴板（通过 atuin + fzf）
+function _atuin_copy() {
+  local cmd
+  cmd=$(atuin search --cmd-only --limit 5000 2>/dev/null | fzf --no-multi --reverse --height=40% \
+    --header='Ctrl+Y — 选中后复制到剪贴板' \
+    --bind='enter:execute-silent(echo -n {} | pbcopy)+abort')
+  zle reset-prompt
+}
+zle -N _atuin_copy
+bindkey '^Y' _atuin_copy
+# Ctrl+Z 后台挂起（zle -N 注册避免 FSH unhandled widget 警告）
+zle -N suspend
+bindkey '^Z' suspend
+# ESC ESC 在行首加 sudo
+autoload -Uz sudo
+zle -N sudo-command-line
+bindkey '^[^[' sudo-command-line
+
+# 补全缓存
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+
+# 补全匹配：先精确匹配，再大小写不敏感，再部分词匹配
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# 补全分组标题（%F/%f 颜色 fzf-tab 会忽略，只能用纯文本装饰）
+zstyle ':completion:*:descriptions' format '── %d ──'
+# 禁用原生菜单，让 fzf-tab 完全接管
+zstyle ':completion:*' menu no
+# 文件名着色（LS_COLORS 在 .zshenv 已 export，此处展开）
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# fzf-tab — Tab 补全预览
+zstyle ':fzf-tab:*' use-fzf-default-opts yes   # 继承 FZF_DEFAULT_OPTS（颜色主题、绑定等）
+zstyle ':fzf-tab:*' fzf-min-height 10          # 动态高度下限，不固定覆盖
+zstyle ':fzf-tab:*' fzf-flags '--border=rounded' '--color=header:italic:bold'
+zstyle ':fzf-tab:*' active-group-style bold underline  # 当前选中分组的标题样式
+zstyle ':fzf-tab:*' switch-group '<' '>'       # < > 切换补全分组
+zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
+zstyle ':fzf-tab:*' fzf-flags '--bind=tab:accept'  # 覆盖全局 tab:toggle+down，避免与补全 Tab 冲突
+
+# 目录预览（cd / zoxide / pushd）
+zstyle ':fzf-tab:complete:(cd|pushd):*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
+zstyle ':fzf-tab:complete:__zoxide_z:*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
+
+# 文件预览（通用：目录 / 文本 / 其他类型）
+_fzf_tab_file_preview='
+  if [[ -d $realpath ]]; then
+    eza --icons --tree --level=2 --color=always $realpath
+  elif [[ -f $realpath ]]; then
+    bat --color=always --style=numbers --line-range=:150 $realpath 2>/dev/null || file --brief $realpath
+  fi
+'
+zstyle ':fzf-tab:complete:(bat|vim|nvim|code|cat|less|diff|cp|mv|rm|open):*' \
+  fzf-preview "$_fzf_tab_file_preview"
+unset _fzf_tab_file_preview
+
+# kill — 进程预览（macOS ps 语法：-p 不用 --pid）
+zstyle ':fzf-tab:complete:(kill|pkill):argument-rest' fzf-preview \
+  '[[ $group == "[process ID]" ]] && ps -p $word -o pid,ppid,user,%cpu,%mem,command 2>/dev/null | tail -n +2'
+zstyle ':fzf-tab:complete:(kill|pkill):argument-rest' fzf-flags '--preview-window=down:3:wrap'
+
+# env/export — 变量值预览
+zstyle ':fzf-tab:complete:(export|unset|printenv):*' fzf-preview 'echo ${(P)word}'
+
+# git — 分支/文件预览
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
+  'git diff --color=always -- $word 2>/dev/null | head -200'
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+  'case $group in
+    "modified file")        git diff --color=always -- $word | head -200 ;;
+    "recent commit object name") git show --color=always $word | head -80 ;;
+    *)                      git log --oneline --color=always $word 2>/dev/null | head -30 ;;
+  esac'
+
+# man — 手册预览
+zstyle ':fzf-tab:complete:man:*' fzf-preview 'man $word 2>/dev/null | col -bx | head -80'
+
+# ssh — 主机配置预览
+zstyle ':fzf-tab:complete:ssh:*' fzf-preview \
+  'cat ~/.ssh/config 2>/dev/null | grep -A5 "Host $word" | head -10 || echo $word'
+
+# brew — 包信息预览
+zstyle ':fzf-tab:complete:brew-(install|uninstall|search|info):*' \
+  fzf-preview 'brew info $word 2>/dev/null'
+
+# git log — 提交历史预览
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview \
+  'git log --oneline --graph --color=always $word 2>/dev/null | head -50'
+
+# docker — 容器/镜像信息预览
+zstyle ':fzf-tab:complete:docker-(run|exec|stop|rm|rmi|pull):*' fzf-preview \
+  'docker inspect $word 2>/dev/null | jq ".[0] | {Name, Status: .State.Status, Image: .Config.Image}" 2>/dev/null || echo $word'
+
+# go — 文档预览
+zstyle ':fzf-tab:complete:go:*' fzf-preview \
+  'go doc $word 2>/dev/null | head -30'
+
+# 更新 zinit 自身及所有已安装插件，并删除 .zshrc 中不再引用的插件
+function zinit-update() {
+  zinit self-update --quiet
+  zinit update --all --parallel --quiet
+  zinit delete --clean --quiet --yes
+}
+
+# 更新 brew 及所有已安装的包和 cask，完成后清理旧版本
+function brew-update() {
+  brew update --quiet
+  brew upgrade --force --quiet
+  brew cleanup --prune=all --quiet
+  brew autoremove --quiet
+  mas upgrade
+}
+
+# 解压任意格式文件
+function extract() {
+  if [[ ! -f "$1" ]]; then
+    gum style --foreground 1 "文件不存在: $1"
+    return 1
+  fi
+  case "$1" in
+    *.tar.bz2)  tar xjf "$1"     ;;
+    *.tar.gz)   tar xzf "$1"     ;;
+    *.tar.xz)   tar xJf "$1"     ;;
+    *.tar.zst)  tar --zstd -xf "$1" ;;
+    *.tar)      tar xf "$1"      ;;
+    *.bz2)      bunzip2 "$1"     ;;
+    *.gz)       gunzip "$1"      ;;
+    *.zip)      unzip "$1"       ;;
+    *.7z)       7z x "$1"        ;;
+    *.rar)      unrar x "$1"     ;;
+    *.xz)       unxz "$1"        ;;
+    *.zst)      unzstd "$1"      ;;
+    *)
+      gum style --foreground 1 "不支持的格式: $1"
+      return 1
+      ;;
+  esac
+  gum style --foreground 2 "  ✓ 解压完成: $1"
+}
+
+# 同时更新 brew 和 zinit
+function update-all() {
+  brew-update
+  zinit-update
+  lark-cli update
+  atuin sync
+}
+
+# aliases
+alias ls='eza --icons -A'                                                               # 列表显示，含隐藏文件
+alias ll='eza --icons -lA --git --time-style=relative --hyperlink --color-scale=size'  # 详细列表
+alias tree='eza --icons --tree --level=2 -A'                                           # 树状视图
+alias cat='bat --paging=never'   # 语法高亮的 cat，不分页
+alias find='fd'                  # 更快更简洁的 find
+alias df='duf'                   # 可视化磁盘使用情况
+alias vi='vim'
+alias c='code .'                # 用当前目录开 VSCode
+alias cr='code -r .'            # 在已有窗口复用，不新开
+alias cdiff='code -d'           # diff 两个文件
+alias cv='code -'               # 管道输出直接在 VSCode 里查看（cat file | cv）
+alias tgz='extract'             # 解压任意格式文件的快捷方式
+
+# Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
+[[ -n $GHOSTTY_RESOURCES_DIR ]] && \
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+
+# 放在最后，减少对补全初始化的干扰
+eval "$(/opt/homebrew/bin/starship init zsh)"              # 提示符
+eval "$(/opt/homebrew/bin/zoxide init zsh --cmd cd)"       # 智能 cd，学习访问历史
+eval "$(/opt/homebrew/bin/fnm env --use-on-cd --shell zsh --version-file-strategy=recursive --resolve-engines)" # Node.js 版本管理，切目录自动切换版本
+eval "$(atuin init zsh --disable-up-arrow)"                # shell 历史增强，保留上箭头原有行为

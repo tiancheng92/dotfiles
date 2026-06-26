@@ -1,0 +1,50 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.cursor/
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+dist/
+build/
+out/
+*.o
+*.a
+
+# Go
+*.test
+/tmp/
+
+# OS
+Thumbs.db
+ehthumbs.db

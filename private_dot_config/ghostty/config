@@ -1,0 +1,54 @@
+font-family = JetBrains Maple Mono
+font-size = 14
+
+theme = Snazzy
+
+background-opacity = 0.95
+background-blur = true
+
+macos-titlebar-style = tabs
+maximize = true
+
+cursor-style = underline
+cursor-style-blink = true
+
+adjust-cell-height = 20%
+
+scrollback-limit = 104857600
+
+shell-integration = detect
+shell-integration-features = true
+
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+tab-inherit-working-directory = true
+
+resize-overlay = never
+
+macos-option-as-alt = left
+macos-auto-secure-input = true
+macos-secure-input-indication = true
+macos-window-buttons = hidden
+macos-window-shadow = false
+
+auto-update = check
+
+copy-on-select = clipboard
+
+font-feature = calt
+font-feature = liga
+font-thicken = true
+
+confirm-close-surface = false
+mouse-hide-while-typing = true
+
+keybind = cmd+n=ignore
+keybind = cmd+enter=ignore
+keybind = ctrl+left=esc:b
+keybind = ctrl+right=esc:f
+keybind = shift+up=jump_to_prompt:-1
+keybind = shift+down=jump_to_prompt:1
+keybind = cmd+t=new_tab
+keybind = shift+left=previous_tab
+keybind = shift+right=next_tab
