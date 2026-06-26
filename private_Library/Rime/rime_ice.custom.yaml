@@ -1,0 +1,22 @@
+patch:
+  translator/enable_sentence: true
+  long_word_filter/count: 4
+  long_word_filter/idx: 2
+  reduce_english_filter/mode: all
+  melt_eng/initial_quality: 0.5
+  'speller/algebra/@before 0': derive/^([zcs])h/$1/
+  'speller/algebra/@before 1': derive/^([zcs])([^h])/$1h$2/
+  'speller/algebra/@before 2': derive/an$/ang/
+  'speller/algebra/@before 3': derive/ang$/an/
+  'speller/algebra/@before 4': derive/en$/eng/
+  'speller/algebra/@before 5': derive/eng$/en/
+  'speller/algebra/@before 6': derive/in$/ing/
+  'speller/algebra/@before 7': derive/ing$/in/
+  'speller/algebra/@before 8': derive/ian$/iang/
+  'speller/algebra/@before 9': derive/iang$/ian/
+  'speller/algebra/@before 10': derive/uan$/uang/
+  'speller/algebra/@before 11': derive/uang$/uan/
+  key_binder:
+    import_preset: default
+    select_first_character: comma
+    select_last_character: period

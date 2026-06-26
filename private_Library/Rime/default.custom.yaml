@@ -1,0 +1,19 @@
+patch:
+  schema_list:
+    - schema: rime_ice
+  menu/page_size: 7
+  ascii_composer/good_old_caps_lock: true
+  ascii_composer/switch_key:
+    Shift_L: noop
+    Shift_R: noop
+    Control_L: noop
+    Control_R: noop
+  key_binder:
+    import_preset: default
+    bindings:
+      - {accept: "Control+Shift+2", toggle: ascii_mode, when: never}
+      - {accept: "Control+Shift+at", toggle: ascii_mode, when: never}
+      - {accept: minus, send: Page_Up, when: has_menu}
+      - {accept: equal, send: Page_Down, when: has_menu}
+      - {accept: Up, send: Page_Up, when: has_menu}
+      - {accept: Down, send: Page_Down, when: has_menu}
