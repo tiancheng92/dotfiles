@@ -130,6 +130,8 @@ history_filter = [
   "^.*_SECRET=",
   "^.*_TOKEN=",
   "^.*_PASSWORD=",
+  "^op read ",
+  "^op run ",
 ]
 # history_filter = [
 #   "^secret-cmd",
@@ -271,12 +273,7 @@ accept_past_line_end = false
 records = true
 
 [preview]
-## which preview strategy to use to calculate the preview height (respects max_preview_height).
-## possible values: auto, static
-## auto: length of the selected command.
-## static: length of the longest command stored in the history.
-## fixed: use max_preview_height as fixed height.
-# strategy = "auto"
+strategy = "auto"
 
 [daemon]
 enabled = true
@@ -372,7 +369,7 @@ filters = ["workspace", "directory", "session", "global"]
 ##
 ## Default:
 # columns = ["duration", "time", "command"]
-columns = ["exit", "duration", { type = "directory", width = 35 }, "command"]
+columns = ["exit", { type = "time", width = 8 }, "duration", { type = "directory", width = 35 }, "command"]
 ##
 ## Examples:
 ##

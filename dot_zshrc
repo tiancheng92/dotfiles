@@ -47,7 +47,8 @@ autoload -Uz _zinit
 
 ZSH_AUTOSUGGEST_STRATEGY=(atuin completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=200
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-search-down accept-line)
+ZSH_AUTOSUGGEST_ASYNC=1
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-search-down accept-line zle-line-init)
 
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTORY_SUBSTRING_SEARCH_FUZZY=1
