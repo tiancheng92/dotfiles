@@ -224,6 +224,33 @@ function update-all() {
   atuin sync
 }
 
+# chezmoi-push [file ...]
+#   不带参数：仅 git add -A + commit + push（适合已手动 chezmoi re-add 完毕的情况）
+#   带参数：先对每个文件执行 chezmoi re-add，再 commit + push
+function chezmoi-push() {
+  local chezmoi_src="$HOME/.local/share/chezmoi"
+
+  if [[ $# -gt 0 ]]; then
+    for f in "$@"; do
+      local abs="${f/#\~/$HOME}"
+      echo "re-add: $abs"
+      chezmoi re-add "$abs" || { echo "re-add failed: $abs"; return 1 }
+    done
+  fi
+
+  cd "$chezmoi_src" || return 1
+
+  if git diff --quiet && git diff --cached --quiet && [[ -z $(git status --short) ]]; then
+    echo "nothing to commit"
+    return 0
+  fi
+
+  git add -A
+  local msg="chore: update $(date '+%Y-%m-%d %H:%M')"
+  git commit -m "$msg"
+  git push
+}
+
 # aliases
 alias ls='eza --icons -A'                                                               # 列表显示，含隐藏文件
 alias ll='eza --icons -lA --git --time-style=relative --hyperlink --color-scale=size'  # 详细列表
