@@ -253,9 +253,9 @@ function chezmoi-push() {
   [[ ${#failed[@]} -gt 0 ]] && print -P "%F{red}re-add failed:%f ${(j:, :)failed}"
 
   # 检查是否有变更
-  local status
-  status=$(git -C "$chezmoi_src" status --short)
-  if [[ -z $status ]]; then
+  local git_status
+  git_status=$(git -C "$chezmoi_src" status --short)
+  if [[ -z $git_status ]]; then
     echo "nothing to commit"
     return 0
   fi
