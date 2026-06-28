@@ -101,8 +101,12 @@ zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 # 补全匹配：先精确匹配，再大小写不敏感，再部分词匹配
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# 补全分组标题（%F/%f 颜色 fzf-tab 会忽略，只能用纯文本装饰）
-zstyle ':completion:*:descriptions' format '── %d ──'
+# 启用补全分组，fzf-tab 的 < > 切换分组依赖此设置
+zstyle ':completion:*' group-name ''
+# 补全分组标题（不加装饰符，避免空分组渲染成横线）
+zstyle ':completion:*:descriptions' format '[%d]'
+# 无匹配时提示
+zstyle ':completion:*:warnings' format '── no matches ──'
 # 禁用原生菜单，让 fzf-tab 完全接管
 zstyle ':completion:*' menu no
 # 文件名着色（LS_COLORS 在 .zshenv 已 export，此处展开）
@@ -110,12 +114,13 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # fzf-tab — Tab 补全预览
 zstyle ':fzf-tab:*' use-fzf-default-opts yes   # 继承 FZF_DEFAULT_OPTS（颜色主题、绑定等）
+zstyle ':fzf-tab:*' prefix '◆  '              # 分组颜色指示符（双空格补偿双宽字符）
 zstyle ':fzf-tab:*' fzf-min-height 10          # 动态高度下限，不固定覆盖
-zstyle ':fzf-tab:*' fzf-flags '--border=rounded' '--color=header:italic:bold'
+zstyle ':fzf-tab:*' fzf-flags '--border=rounded' '--color=header:italic:bold' '--bind=tab:down' '--preview-window=right:55%:wrap'
 zstyle ':fzf-tab:*' active-group-style bold underline  # 当前选中分组的标题样式
 zstyle ':fzf-tab:*' switch-group '<' '>'       # < > 切换补全分组
+zstyle ':fzf-tab:*' show-group brief           # 只在切换时显示 header，平时不占行
 zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
-zstyle ':fzf-tab:*' fzf-flags '--bind=tab:down'  # Tab 移到下一项，Shift+Tab 或 Enter 确认
 
 # 目录预览（cd / zoxide / pushd）
 zstyle ':fzf-tab:complete:(cd|pushd):*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
