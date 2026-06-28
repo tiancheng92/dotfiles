@@ -1,9 +1,11 @@
-# Catppuccin Mocha — https://github.com/catppuccin/catppuccin
-# Uses exact Mocha hex values via Atuin's #rrggbb support
-Base       = "#cdd6f4"   # Text
-Annotation = "#6c7086"   # Subtext0
-Guidance   = "#89b4fa"   # Blue
-Important  = "#a6e3a1"   # Green
-AlertInfo  = "#94e2d5"   # Teal
-AlertWarn  = "#f9e2af"   # Yellow
-AlertError = "#f38ba8"   # Red
+[theme]
+name = "catppuccin-mocha"
+
+[colors]
+Base       = "#cdd6f4"   # Text        — 主文字
+Annotation = "#bac2de"   # Subtext1    — 时间/次要信息（比 Subtext0 亮）
+Guidance   = "#89b4fa"   # Blue        — 引导/提示
+Important  = "#a6e3a1"   # Green       — 成功/exit=0
+AlertInfo  = "#94e2d5"   # Teal        — 信息
+AlertWarn  = "#fab387"   # Peach       — 警告（橙色，与白色区分更明显）
+AlertError = "#f38ba8"   # Red         — 错误/exit≠0
