@@ -228,6 +228,7 @@ function update-all() {
   zinit-update
   lark-cli update
   atuin sync
+  brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
 }
 
 # chezmoi-push [-n] [file ...]
