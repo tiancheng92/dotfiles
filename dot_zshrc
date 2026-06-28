@@ -115,7 +115,7 @@ zstyle ':fzf-tab:*' fzf-flags '--border=rounded' '--color=header:italic:bold'
 zstyle ':fzf-tab:*' active-group-style bold underline  # 当前选中分组的标题样式
 zstyle ':fzf-tab:*' switch-group '<' '>'       # < > 切换补全分组
 zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
-zstyle ':fzf-tab:*' fzf-flags '--bind=tab:accept'  # 覆盖全局 tab:toggle+down，避免与补全 Tab 冲突
+zstyle ':fzf-tab:*' fzf-flags '--bind=tab:down'  # Tab 移到下一项，Shift+Tab 或 Enter 确认
 
 # 目录预览（cd / zoxide / pushd）
 zstyle ':fzf-tab:complete:(cd|pushd):*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
