@@ -2,11 +2,7 @@
 HISTFILE="$XDG_STATE_HOME/zsh/history"  # 必须在 .zshrc 设置，否则 /etc/zshrc 会覆盖
 HISTSIZE=100000
 SAVEHIST=100000
-setopt HIST_IGNORE_ALL_DUPS   # 删除历史中所有重复条目
-setopt HIST_IGNORE_SPACE      # 以空格开头的命令不记录
-setopt SHARE_HISTORY          # 多终端共享历史（已包含实时写入）
-setopt HIST_REDUCE_BLANKS     # 保存历史时压缩多余空格
-setopt HIST_VERIFY            # !! 展开后先显示不立即执行，避免误触
+setopt HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE SHARE_HISTORY HIST_REDUCE_BLANKS HIST_VERIFY
 
 # Emacs 行编辑模式（zsh 默认 main=viins，Ctrl+A/E/K 等失效，显式切回 emacs）
 bindkey -e
@@ -15,19 +11,8 @@ bindkey -e
 WORDCHARS='*?_-[]~&;!#$%^(){}<>'
 
 # zsh 行为优化
-setopt AUTO_CD                # 直接输入目录名即可 cd
-unsetopt CORRECT              # 关闭拼写纠错（短 alias 误报太烦）
-setopt AUTO_PUSHD             # cd 自动压栈，可用 popd 回退，dirs -v 查看栈
-setopt PUSHD_IGNORE_DUPS      # 去除目录栈重复
-setopt PUSHD_SILENT           # cd 时不打印目录栈
-setopt EXTENDED_GLOB          # 扩展通配符支持（^、#、~ 等）
-setopt NO_BEEP                # 关闭错误提示音
-setopt INTERACTIVE_COMMENTS   # 交互模式允许 # 注释，方便临时禁用命令
-setopt NO_CASE_GLOB           # glob 不区分大小写
-setopt NUMERIC_GLOB_SORT      # 文件名按数字顺序排序，file10 排在 file9 后
-setopt COMPLETE_IN_WORD       # 光标在词中间也能触发补全
-setopt ALWAYS_TO_END          # 补全后光标自动移到词尾
-setopt GLOB_DOTS              # glob 默认包含点文件，无需显式写 .*
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT EXTENDED_GLOB NO_BEEP INTERACTIVE_COMMENTS NO_CASE_GLOB NUMERIC_GLOB_SORT COMPLETE_IN_WORD ALWAYS_TO_END GLOB_DOTS
+unsetopt CORRECT
 
 # Zinit — 插件管理器，未安装时自动克隆
 ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
@@ -120,8 +105,7 @@ zstyle ':fzf-tab:*' show-group brief           # 只在切换时显示 header，
 zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
 
 # 目录预览（cd / zoxide / pushd）
-zstyle ':fzf-tab:complete:(cd|pushd):*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
-zstyle ':fzf-tab:complete:__zoxide_z:*'      fzf-preview 'eza --icons --tree --level=2 --color=always $word'
+zstyle ':fzf-tab:complete:(cd|pushd|__zoxide_z):*' fzf-preview 'eza --icons --tree --level=2 --color=always $word'
 
 # 文件预览（通用：目录 / 文本 / 其他类型）
 _fzf_tab_file_preview='
