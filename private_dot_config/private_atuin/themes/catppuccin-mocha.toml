@@ -1,10 +1,16 @@
-# Catppuccin Mocha — https://github.com/catppuccin/catppuccin
-# Atuin only supports the named palette colors listed in its docs,
-# so we map each role to the closest Mocha hue via terminal 256-color indices.
-Base       = "bright-white"   # Text: Catppuccin cdd6f4 → brightest readable
-Annotation = "bright-black"   # Subtext0: 6c7086 → dim grey
-Guidance   = "bright-blue"    # Blue: 89b4fa
-Important  = "bright-green"   # Green: a6e3a1
-AlertInfo  = "bright-cyan"    # Teal: 94e2d5
-AlertWarn  = "bright-yellow"  # Yellow: f9e2af
-AlertError = "bright-red"     # Red: f38ba8
+# Catppuccin Mocha — mapped to SVG/CSS3 named colors (palette crate)
+# Mocha hex → closest SVG named color
+# cdd6f4 (Text)      → lavender      (#e6e6fa, close enough for light text)
+# 6c7086 (Subtext0)  → slategray     (#708090)
+# 89b4fa (Blue)      → cornflowerblue (#6495ed)
+# a6e3a1 (Green)     → lightgreen    (#90ee90)
+# 94e2d5 (Teal)      → mediumturquoise (#48d1cc)
+# f9e2af (Yellow)    → wheat         (#f5deb3)
+# f38ba8 (Red)       → lightcoral    (#f08080)
+Base       = "lavender"
+Annotation = "slategray"
+Guidance   = "cornflowerblue"
+Important  = "lightgreen"
+AlertInfo  = "mediumturquoise"
+AlertWarn  = "wheat"
+AlertError = "lightcoral"
