@@ -1,16 +1,9 @@
-# Catppuccin Mocha — mapped to SVG/CSS3 named colors (palette crate)
-# Mocha hex → closest SVG named color
-# cdd6f4 (Text)      → lavender      (#e6e6fa, close enough for light text)
-# 6c7086 (Subtext0)  → slategray     (#708090)
-# 89b4fa (Blue)      → cornflowerblue (#6495ed)
-# a6e3a1 (Green)     → lightgreen    (#90ee90)
-# 94e2d5 (Teal)      → mediumturquoise (#48d1cc)
-# f9e2af (Yellow)    → wheat         (#f5deb3)
-# f38ba8 (Red)       → lightcoral    (#f08080)
-Base       = "lavender"
-Annotation = "slategray"
-Guidance   = "cornflowerblue"
-Important  = "lightgreen"
-AlertInfo  = "mediumturquoise"
-AlertWarn  = "wheat"
-AlertError = "lightcoral"
+# Catppuccin Mocha — https://github.com/catppuccin/catppuccin
+# Uses exact Mocha hex values via Atuin's #rrggbb support
+Base       = "#cdd6f4"   # Text
+Annotation = "#6c7086"   # Subtext0
+Guidance   = "#89b4fa"   # Blue
+Important  = "#a6e3a1"   # Green
+AlertInfo  = "#94e2d5"   # Teal
+AlertWarn  = "#f9e2af"   # Yellow
+AlertError = "#f38ba8"   # Red
