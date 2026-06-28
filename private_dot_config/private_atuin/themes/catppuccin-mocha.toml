@@ -1,0 +1,10 @@
+# Catppuccin Mocha — https://github.com/catppuccin/catppuccin
+# Atuin only supports the named palette colors listed in its docs,
+# so we map each role to the closest Mocha hue via terminal 256-color indices.
+Base       = "bright-white"   # Text: Catppuccin cdd6f4 → brightest readable
+Annotation = "bright-black"   # Subtext0: 6c7086 → dim grey
+Guidance   = "bright-blue"    # Blue: 89b4fa
+Important  = "bright-green"   # Green: a6e3a1
+AlertInfo  = "bright-cyan"    # Teal: 94e2d5
+AlertWarn  = "bright-yellow"  # Yellow: f9e2af
+AlertError = "bright-red"     # Red: f38ba8
