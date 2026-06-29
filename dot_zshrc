@@ -276,6 +276,7 @@ alias cat='bat --paging=never'   # 语法高亮的 cat，不分页
 alias find='fd'                  # 更快更简洁的 find
 alias df='duf'                   # 可视化磁盘使用情况
 alias vi='vim'
+alias top='btop'
 alias c='code .'                # 用当前目录开 VSCode
 alias cr='code -r .'            # 在已有窗口复用，不新开
 alias cdiff='code -d'           # diff 两个文件
