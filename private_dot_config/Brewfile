@@ -32,6 +32,10 @@ brew "jq"
 brew "mas"
 # Open source relational database management system
 brew "mysql", restart_service: :changed
+# Wrapper to colorize and simplify ping's output
+brew "prettyping"
+# Modern replacement for ps written in Rust
+brew "procs"
 # Persistent key-value database, with built-in net interface
 brew "redis", restart_service: :changed
 # Search tool like grep and The Silver Searcher
@@ -42,6 +46,8 @@ brew "rtk"
 brew "starship"
 # User interface to the TELNET protocol
 brew "telnet"
+# Command-line unarchiving tools supporting multiple formats
+brew "unar"
 # JavaScript package manager
 brew "yarn"
 # Blazing fast terminal file manager written in Rust, based on async I/O
