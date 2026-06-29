@@ -53,7 +53,8 @@ zinit wait lucid light-mode for \
       hlissner/zsh-autopair
 
 # fzf — 模糊搜索
-eval "$(/opt/homebrew/bin/fzf --zsh)"
+source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+source /opt/homebrew/opt/fzf/shell/completion.zsh
 
 # Ctrl+Delete 删词
 bindkey '^[[3;5~' kill-word
