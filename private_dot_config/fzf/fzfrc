@@ -1,0 +1,22 @@
+--layout=reverse
+--border=rounded
+--info=inline
+--ignore-case
+--min-height=15
+--prompt='  '
+--pointer=▶
+--marker=✓
+--scroll-off=3
+--highlight-line
+--multi
+--border-label=' fzf '
+--color=bg+:#3c3f51,bg:-1,spinner:#9aedfe,hl:#ff5c57
+--color=fg:#eff0eb,header:#ff5c57,info:#9aedfe,pointer:#ff6ac1
+--color=marker:#5af78e,fg+:#eff0eb,prompt:#57c7ff,hl+:#ff5c57
+--color=border:#686868,gutter:-1,label:#9aedfe
+--bind=tab:toggle+down
+--bind=ctrl-/:toggle-preview
+--bind=ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down
+--bind=ctrl-f:preview-page-down,ctrl-b:preview-page-up
+--bind=alt-up:preview-top,alt-down:preview-bottom
+--bind=?:toggle-preview

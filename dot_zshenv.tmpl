@@ -17,23 +17,8 @@ export FZF_CTRL_T_COMMAND="$_fd_base --type f"
 export FZF_ALT_C_COMMAND="$_fd_base --type d"
 unset _fd_base
 
-export FZF_DEFAULT_OPTS="
-  --layout=reverse --border=rounded --info=inline --ignore-case --min-height=15
-  --prompt='  ' --pointer='▶' --marker='✓'
-  --scroll-off=3 --highlight-line
-  --multi
-  --color=bg+:#3c3f51,bg:-1,spinner:#9aedfe,hl:#ff5c57
-  --color=fg:#eff0eb,header:#ff5c57,info:#9aedfe,pointer:#ff6ac1
-  --color=marker:#5af78e,fg+:#eff0eb,prompt:#57c7ff,hl+:#ff5c57
-  --color=border:#686868,gutter:-1
-  --bind='tab:toggle+down'
-  --bind='ctrl-/:toggle-preview'
-  --bind='ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
-  --bind='ctrl-f:preview-page-down,ctrl-b:preview-page-up'
-  --bind='alt-up:preview-top,alt-down:preview-bottom'
-  --bind='?:toggle-preview'
-"
-# NOTE: --height 不放 FZF_DEFAULT_OPTS，避免 use-fzf-default-opts 时覆盖 fzf-tab 动态高度
+export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME/fzf/fzfrc"
+# NOTE: --height 不放 fzfrc，避免 use-fzf-default-opts 时覆盖 fzf-tab 动态高度
 
 export FZF_CTRL_T_OPTS="
   --height=50% --ansi
