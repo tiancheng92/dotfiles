@@ -1,0 +1,17 @@
+[mgr]
+show_hidden = true
+sort_dir_first = true
+
+[opener]
+edit = [
+  { run = 'code "$@"', desc = "VSCode", block = false, for = "macos" },
+]
+
+# bulk rename 用 VSCode
+[[opener.bulk-rename]]
+run   = "code --wait %s"
+block = true
+
+[[open.prepend_rules]]
+url = "bulk-rename.txt"
+use = "bulk-rename"
