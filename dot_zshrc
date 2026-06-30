@@ -37,14 +37,12 @@ HISTORY_SUBSTRING_SEARCH_FUZZY=1
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=black,bg=green,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=white,bg=red,bold'
 
-# fzf-tab 必须立即加载（需在 compinit 之后、提示符之前）
-zinit light Aloxaf/fzf-tab
-
-# 其余插件全部懒加载：blockf 让 zinit 接管补全注册，zicompinit 替代手动 compinit
+# 插件懒加载：blockf 注册补全路径 → zicompinit 初始化补全 → fzf-tab 接管 → FSH 高亮
 zinit wait lucid light-mode for \
   blockf \
       zsh-users/zsh-completions \
   atinit'zicompinit; zicdreplay' \
+      Aloxaf/fzf-tab \
       zdharma-continuum/fast-syntax-highlighting \
   atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' \
       zsh-users/zsh-history-substring-search \
@@ -184,8 +182,8 @@ function update-all() {
     local label=$1; shift
     print -P "%F{cyan}── $label %f"
     t=$SECONDS
-    "$@" && print -P "%F{245}   ↳ $((SECONDS-t))s%f" \
-          || print -P "%F{red}   ✗ $label failed ($((SECONDS-t))s)%f"
+    "$@" && print -P "%F{245}↳ ⏱ $((SECONDS-t))s%f" \
+          || print -P "%F{red}✗ $label failed ($((SECONDS-t))s)%f"
   }
 
   _ua_step "brew"      brew-update
