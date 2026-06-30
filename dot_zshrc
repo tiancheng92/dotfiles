@@ -294,6 +294,7 @@ alias tgz='unar'
 alias mkdir='mkdir -p'
 
 function port() { lsof -i ":$1" }
+function mkcd() { mkdir -p "$1" && cd "$1" }
 
 # Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
 [[ -n $GHOSTTY_RESOURCES_DIR ]] && \
