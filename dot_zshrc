@@ -41,7 +41,7 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=white,bg=red,bold'
 zinit wait lucid light-mode for \
   blockf \
       zsh-users/zsh-completions \
-  atinit'zicompinit; zicdreplay' \
+  atinit'zicompinit; zicdreplay; source <(nali completion zsh)' \
       Aloxaf/fzf-tab \
       zdharma-continuum/fast-syntax-highlighting \
   atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' \
@@ -53,9 +53,6 @@ zinit wait lucid light-mode for \
 # fzf — 模糊搜索
 source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 source /opt/homebrew/opt/fzf/shell/completion.zsh
-
-# nali 补全
-source <(nali completion zsh)
 
 # Ctrl+Delete 删词
 bindkey '^[[3;5~' kill-word
