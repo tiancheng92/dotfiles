@@ -106,7 +106,7 @@ zstyle ':fzf-tab:*' show-group brief           # 只在切换时显示 header，
 zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
 
 # 目录预览（cd / zoxide / pushd）
-zstyle ':fzf-tab:complete:(cd|pushd|__zoxide_z):*' fzf-preview 'eza --icons --tree --level=2 --color=always $word'
+zstyle ':fzf-tab:complete:(cd|pushd|__zoxide_z):*' fzf-preview 'eza --icons --tree --level=2 --color=always $realpath'
 
 # 文件预览（通用：目录 / 文本 / 其他类型）
 _fzf_tab_file_preview='
