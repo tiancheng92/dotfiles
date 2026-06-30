@@ -212,7 +212,7 @@ function chezmoi-push() {
   while [[ $1 == -* ]]; do
     case $1 in
       -n) dry_run=1 ;;
-      -a) set -- $(chezmoi managed --include=files | sed "s|^|$HOME/|") ; break ;;
+      -a) set -- $(chezmoi managed --include=files | sd '^' "$HOME/") ; break ;;
     esac
     shift
   done
@@ -261,7 +261,7 @@ function chezmoi-push() {
     local names=("${(@f)$(printf '%s\n' "${re_added[@]}" | xargs -I{} basename {})}")
     msg="chore: update ${(j:, :)names}"
   else
-    local changed=("${(@f)$(git -C "$chezmoi_src" status --short | awk '{print $2}' | xargs -I{} basename {})}")
+    local changed=("${(@f)$(git -C "$chezmoi_src" status --short | choose 1 | xargs -I{} basename {})}")
     msg="chore: update ${(j:, :)changed}"
   fi
 
@@ -300,10 +300,16 @@ alias mkdir='mkdir -p'
 
 function port() { lsof -i ":$1" | nali }
 function mkcd() { mkdir -p "$1" && cd "$1" }
-alias play='nowplaying-cli togglePlayPause'
-alias next='nowplaying-cli next'
-alias prev='nowplaying-cli previous'
-function np() { nowplaying-cli get title artist | paste - - | sd '\t' ' — ' }
+function yoxh() {
+  local session="$HOME/.local/share/xh/sessions/yo-star/ops.json"
+  [[ -f "$session" ]] || { echo "session not found: $session"; return 1 }
+  if [[ "$*" == *"--curl"* ]]; then
+    local headers=("${(@f)$(jq -r '.headers[] | "\(.name):\(.value)"' "$session")}")
+    xh --curl "${@:#--curl}" "${headers[@]}"
+  else
+    xh --session="$session" "$@"
+  fi
+}
 
 # Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
 [[ -n $GHOSTTY_RESOURCES_DIR ]] && \
