@@ -277,7 +277,12 @@ alias find='fd'                  # 更快更简洁的 find
 alias df='duf'                   # 可视化磁盘使用情况
 alias vi='vim'
 alias top='btop'
-alias ping='prettyping --nolegend --pingbin /sbin/ping'
+function ping() {
+  dig +short "${1##*@}" 2>/dev/null | grep -E '^[0-9.a-f:]+$' | nali
+  prettyping --nolegend --pingbin /sbin/ping "$@"
+}
+function traceroute() { command traceroute "$@" | nali }
+function dig() { command dig "$@" | nali }
 alias ps='procs'
 # yazi：退出后自动 cd 到 yazi 最后所在目录
 function y() {
