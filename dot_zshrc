@@ -179,12 +179,22 @@ function brew-update() {
 
 # 同时更新 brew 和 zinit
 function update-all() {
-  echo "── brew ──────────────────────────────" && brew-update
-  echo "── zinit ─────────────────────────────" && zinit-update
-  echo "── lark-cli ──────────────────────────" && lark-cli update
-  echo "── atuin ─────────────────────────────" && atuin sync
-  echo "── Brewfile ──────────────────────────" && brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
-  echo "── done ──────────────────────────────"
+  local t
+  _ua_step() {
+    local label=$1; shift
+    print -P "%F{cyan}── $label %f"
+    t=$SECONDS
+    "$@" && print -P "%F{245}   ↳ $((SECONDS-t))s%f" \
+          || print -P "%F{red}   ✗ $label failed ($((SECONDS-t))s)%f"
+  }
+
+  _ua_step "brew"      brew-update
+  _ua_step "zinit"     zinit-update
+  _ua_step "lark-cli"  lark-cli update
+  _ua_step "atuin"     atuin sync
+  _ua_step "Brewfile"  brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
+  print -P "%F{green}── done%f"
+  unfunction _ua_step
 }
 
 # chezmoi-push [-n] [file ...]
