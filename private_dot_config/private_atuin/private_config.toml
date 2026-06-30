@@ -212,8 +212,8 @@ command_chaining = true
 # prefers_reduced_motion = false
 
 [stats]
-common_subcommands = ["git", "go", "yarn", "brew", "docker", "kubectl", "npm", "cargo"]
-ignored_commands = ["ls", "ll", "cd", "exit", "clear", "pwd"]
+common_subcommands = ["git", "go", "yarn", "brew", "docker", "kubectl", "npm", "cargo", "make", "chezmoi", "zinit"]
+ignored_commands = ["ls", "ll", "cd", "exit", "clear", "pwd", "top", "btop", "y", "z"]
 
 ## Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
 # common_subcommands = [
@@ -317,7 +317,7 @@ sync_frequency = 300
 ##    https://ogeon.github.io/docs/palette/master/palette/named/index.html
 ## If you provide a custom theme file, it should be  called "NAME.toml" and the theme below
 ## should be the stem, i.e. `theme = "NAME"` for your chosen NAME.
-name = "catppuccin-mocha"
+name = "snazzy"
 
 ## Whether the theme manager should output normal or extra information to help fix themes.
 ## Boolean, true or false. If unset, left up to the theme manager.
