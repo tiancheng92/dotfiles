@@ -61,10 +61,9 @@ bindkey '^[[3;5~' kill-word
 
 # Ctrl+Y 复制最近一条匹配的历史命令到剪贴板（通过 atuin + fzf）
 function _atuin_copy() {
-  local cmd
-  cmd=$(atuin search --cmd-only --limit 5000 2>/dev/null | fzf --no-multi --reverse --height=40% \
+  atuin search --cmd-only --limit 5000 2>/dev/null | fzf --no-multi --reverse --height=40% \
     --header='Ctrl+Y — 选中后复制到剪贴板' \
-    --bind='enter:execute-silent(echo -n {} | pbcopy)+abort')
+    --bind='enter:execute-silent(echo -n {} | pbcopy)+abort'
   zle reset-prompt
 }
 zle -N _atuin_copy
@@ -180,11 +179,12 @@ function brew-update() {
 
 # 同时更新 brew 和 zinit
 function update-all() {
-  brew-update
-  zinit-update
-  lark-cli update
-  atuin sync
-  brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
+  echo "── brew ──────────────────────────────" && brew-update
+  echo "── zinit ─────────────────────────────" && zinit-update
+  echo "── lark-cli ──────────────────────────" && lark-cli update
+  echo "── atuin ─────────────────────────────" && atuin sync
+  echo "── Brewfile ──────────────────────────" && brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
+  echo "── done ──────────────────────────────"
 }
 
 # chezmoi-push [-n] [file ...]
