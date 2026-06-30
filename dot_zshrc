@@ -206,7 +206,20 @@ function chezmoi-push() {
   # re-add 指定文件
   for f in "$@"; do
     local abs="${f:A}"   # zsh 内置：展开 ~ 并解析相对路径为绝对路径
+
+    # 需要手动维护的文件，跳过 re-add
+    case "$abs" in
+      "$HOME/.zshenv")
+        print -P "%F{yellow}⚠ 跳过 .zshenv：请直接编辑 ~/.local/share/chezmoi/dot_zshenv.tmpl%f"
+        continue ;;
+      "$HOME/.claude/settings.json")
+        print -P "%F{yellow}⚠ 跳过 settings.json：请手动维护%f"
+        continue ;;
+    esac
+
     if chezmoi re-add "$abs" 2>/dev/null; then
+      re_added+=("$abs")
+    elif chezmoi add "$abs" 2>/dev/null; then
       re_added+=("$abs")
     else
       failed+=("$abs")
