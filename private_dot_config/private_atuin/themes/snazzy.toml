@@ -1,0 +1,11 @@
+[theme]
+name = "snazzy"
+
+[colors]
+Base       = "#eff0eb"   # foreground  — 主文字
+Annotation = "#686868"   # bright black — 时间/次要信息
+Guidance   = "#57c7ff"   # blue        — 引导/提示
+Important  = "#5af78e"   # green       — 成功/exit=0
+AlertInfo  = "#9aedfe"   # cyan        — 信息
+AlertWarn  = "#f3f99d"   # yellow      — 警告
+AlertError = "#ff5c57"   # red         — 错误/exit≠0
