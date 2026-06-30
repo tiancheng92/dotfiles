@@ -197,11 +197,14 @@ function chezmoi-push() {
   local failed=()
   local re_added=()
 
-  # 解析 -n
-  if [[ $1 == "-n" ]]; then
-    dry_run=1
+  # 解析参数
+  while [[ $1 == -* ]]; do
+    case $1 in
+      -n) dry_run=1 ;;
+      -a) set -- $(chezmoi managed --include=files | sed "s|^|$HOME/|") ; break ;;
+    esac
     shift
-  fi
+  done
 
   # re-add 指定文件
   for f in "$@"; do
