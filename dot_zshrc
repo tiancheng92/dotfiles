@@ -173,7 +173,6 @@ function brew-update() {
   brew upgrade --force --quiet
   brew cleanup --prune=all --quiet
   brew autoremove --quiet
-  mas upgrade
 }
 
 
@@ -184,11 +183,12 @@ function update-all() {
     local label=$1; shift
     print -P "%F{cyan}── $label %f"
     t=$SECONDS
-    "$@" && print -P "%F{245}   ↳ $((SECONDS-t))s%f" \
-          || print -P "%F{red}   ✗ $label failed ($((SECONDS-t))s)%f"
+    "$@" > /dev/null && print -P "%F{245}   ↳ $((SECONDS-t))s%f" \
+                      || print -P "%F{red}   ✗ $label failed ($((SECONDS-t))s)%f"
   }
 
   _ua_step "brew"      brew-update
+  print -P "%F{cyan}── mas %f" && mas upgrade
   _ua_step "zinit"     zinit-update
   _ua_step "lark-cli"  lark-cli update
   _ua_step "atuin"     atuin sync
