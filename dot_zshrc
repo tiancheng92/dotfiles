@@ -190,6 +190,7 @@ function update-all() {
   _ua_step "zinit"     zinit-update
   _ua_step "lark-cli"  lark-cli update
   _ua_step "atuin"     atuin sync
+  _ua_step "nali"      nali update
   _ua_step "Brewfile"  brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
   print -P "%F{green}── done%f"
   unfunction _ua_step
