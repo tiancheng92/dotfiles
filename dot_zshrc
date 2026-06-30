@@ -1,3 +1,6 @@
+# 自定义补全目录（存放静态生成的 _xxx 补全文件）
+fpath=("$HOME/.local/share/zsh/completions" $fpath)
+
 # 历史记录
 HISTFILE="$XDG_STATE_HOME/zsh/history"  # 必须在 .zshrc 设置，否则 /etc/zshrc 会覆盖
 HISTSIZE=100000
@@ -41,7 +44,7 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=white,bg=red,bold'
 zinit wait lucid light-mode for \
   blockf \
       zsh-users/zsh-completions \
-  atinit'zicompinit; zicdreplay; source <(nali completion zsh)' \
+  atinit'zicompinit; zicdreplay' \
       Aloxaf/fzf-tab \
       zdharma-continuum/fast-syntax-highlighting \
   atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' \
