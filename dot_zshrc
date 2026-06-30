@@ -190,7 +190,6 @@ function update-all() {
   _ua_step "zinit"     zinit-update
   _ua_step "lark-cli"  lark-cli update
   _ua_step "atuin"     atuin sync
-  _ua_step "nali"      nali update
   _ua_step "Brewfile"  brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
   print -P "%F{green}── done%f"
   unfunction _ua_step
@@ -277,10 +276,7 @@ alias find='fd'                  # 更快更简洁的 find
 alias df='duf'                   # 可视化磁盘使用情况
 alias vi='vim'
 alias top='btop'
-function ping() {
-  dig +short "${1##*@}" 2>/dev/null | grep -E '^[0-9.a-f:]+$' | nali
-  prettyping --nolegend --pingbin /sbin/ping "$@"
-}
+function ping() { command ping "$@" | nali}
 function traceroute() { command traceroute "$@" | nali }
 function dig() { command dig "$@" | nali }
 alias ps='procs'
@@ -299,7 +295,7 @@ alias cv='code -'               # 管道输出直接在 VSCode 里查看（cat f
 alias tgz='unar'
 alias mkdir='mkdir -p'
 
-function port() { lsof -i ":$1" }
+function port() { lsof -i ":$1" | nali }
 function mkcd() { mkdir -p "$1" && cd "$1" }
 
 # Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
