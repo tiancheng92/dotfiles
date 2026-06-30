@@ -300,6 +300,10 @@ alias mkdir='mkdir -p'
 
 function port() { lsof -i ":$1" | nali }
 function mkcd() { mkdir -p "$1" && cd "$1" }
+alias play='nowplaying-cli togglePlayPause'
+alias next='nowplaying-cli next'
+alias prev='nowplaying-cli previous'
+function np() { nowplaying-cli get title artist | paste - - | sd '\t' ' — ' }
 
 # Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
 [[ -n $GHOSTTY_RESOURCES_DIR ]] && \
