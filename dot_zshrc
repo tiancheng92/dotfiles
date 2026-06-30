@@ -291,6 +291,9 @@ alias cr='code -r .'            # 在已有窗口复用，不新开
 alias cdiff='code -d'           # diff 两个文件
 alias cv='code -'               # 管道输出直接在 VSCode 里查看（cat file | cv）
 alias tgz='unar'
+alias mkdir='mkdir -p'
+
+function port() { lsof -i ":$1" }
 
 # Ghostty shell integration 兜底（exec zsh / sudo zsh 等子 shell 场景）
 [[ -n $GHOSTTY_RESOURCES_DIR ]] && \
