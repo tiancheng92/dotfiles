@@ -227,7 +227,7 @@ function chezmoi-push() {
         print -P "%F{yellow}⚠ 跳过 .zshenv：请直接编辑 ~/.local/share/chezmoi/dot_zshenv.tmpl%f"
         continue ;;
       "$HOME/.claude/settings.json")
-        print -P "%F{yellow}⚠ 跳过 settings.json：请手动维护%f"
+        print -P "%F{yellow}⚠ 跳过 settings.json：请直接编辑 ~/.local/share/chezmoi/dot_claude/private_settings.json.tmpl%f"
         continue ;;
     esac
 
