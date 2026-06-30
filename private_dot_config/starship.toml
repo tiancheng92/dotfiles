@@ -1,7 +1,7 @@
 format = """$directory$git_branch$git_status$git_state
 $character"""
 
-right_format = """$custom$nodejs$golang$python$rust$cmd_duration"""
+right_format = """$nodejs$golang$python$rust$cmd_duration"""
 
 [directory]
 style = "bold cyan"
@@ -72,9 +72,3 @@ style = "bold white"
 
 [package]
 disabled = true
-
-[custom.nowplaying]
-command = "nowplaying-cli get title artist | paste - - | sd '\\t' ' — '"
-when = "nowplaying-cli get playbackRate | grep -q '^1'"
-style = "bold magenta"
-format = "[♪ $output]($style) "
