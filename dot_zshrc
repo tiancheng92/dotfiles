@@ -305,6 +305,9 @@ alias cdiff='code -d'           # diff 两个文件
 alias cv='code -'               # 管道输出直接在 VSCode 里查看（cat file | cv）
 alias tgz='unar'
 alias mkdir='mkdir -p'
+alias mdcat='CLICOLOR_FORCE=1 glow --style=dark'  # 命令行直接渲染 markdown
+alias help='tldr'                                  # 命令速查（tealdeer）
+alias bench='hyperfine --warmup=3'                  # 命令行基准测试
 
 function port() { lsof -i ":$1" | nali }
 function mkcd() { mkdir -p "$1" && cd "$1" }
