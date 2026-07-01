@@ -26,6 +26,7 @@
 	colorMoved = zebra
 	tool = delta
 	algorithm = histogram
+	colorMovedWS = allow-indentation-change
 [rebase]
 	autoStash = true
 [interactive]
