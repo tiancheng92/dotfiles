@@ -100,7 +100,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # fzf-tab — Tab 补全预览
 zstyle ':fzf-tab:*' use-fzf-default-opts yes   # 继承 FZF_DEFAULT_OPTS（颜色主题、绑定等）
 zstyle ':fzf-tab:*' prefix '◆ '              # 分组颜色指示符（双空格补偿双宽字符）
-zstyle ':fzf-tab:*' fzf-min-height 10          # 动态高度下限，不固定覆盖
+zstyle ':fzf-tab:*' fzf-min-height 'LINES/2'   # 高度下限为终端高度 50%，条目多时仍可再撑高
 zstyle ':fzf-tab:*' fzf-flags '--border=rounded' '--color=header:italic:bold' '--preview-window=right:55%:wrap'
 zstyle ':fzf-tab:*' active-group-style bold underline  # 当前选中分组的标题样式
 zstyle ':fzf-tab:*' switch-group '<' '>'       # < > 切换补全分组
@@ -110,10 +110,12 @@ zstyle ':fzf-tab:*' continuous-trigger '/'     # 路径补全连续触发
 # 目录预览（cd / zoxide / pushd）
 zstyle ':fzf-tab:complete:(cd|pushd|__zoxide_z):*' fzf-preview 'eza --icons --tree --level=2 --color=always $realpath'
 
-# 文件预览（通用：目录 / 文本 / 其他类型）
+# 文件预览（通用：目录 / Markdown / 文本 / 其他类型）
 _fzf_tab_file_preview='
   if [[ -d $realpath ]]; then
     eza --icons --tree --level=2 --color=always $realpath
+  elif [[ $realpath == *.md ]]; then
+    CLICOLOR_FORCE=1 glow --style=dark --width=$((COLUMNS/2)) $realpath
   elif [[ -f $realpath ]]; then
     bat --color=always --style=numbers --line-range=:150 $realpath 2>/dev/null || file --brief $realpath
   fi
@@ -121,6 +123,10 @@ _fzf_tab_file_preview='
 zstyle ':fzf-tab:complete:(bat|vim|nvim|code|cat|less|diff|cp|mv|rm|open):*' \
   fzf-preview "$_fzf_tab_file_preview"
 unset _fzf_tab_file_preview
+
+# 命令名补全 — tldr 速查优先，没有再退回 man
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-):*' fzf-preview \
+  'tldr --color always $word 2>/dev/null || man $word 2>/dev/null | col -bx | head -80'
 
 # kill — 进程预览（macOS ps 语法：-p 不用 --pid）
 zstyle ':fzf-tab:complete:(kill|pkill):argument-rest' fzf-preview \
