@@ -4,6 +4,7 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
+	verbose = true
 [user]
 	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZJ1QAe4Qp//ma3qoxtick1sE7UsvAAsRHrn6hJImDwwrMS5vhpQai0KDCjZ3BHOqMifQE53xgi1+RV3AgD0MjoCw27g5ozPFxQ3jr0j4RZdkO0NUz6pjjgFeAyJ3wlYYapuZqOJRG2Wcxfv7CfQ65UUWd84AZVGzzfNp1RE7NIM1QrKHUH0LWeiHdUQUJ15BP2Q7rGjn9Fhc9BEJmc3O3vAoeWck33ZuPVPf1qUzIFum1E3VhtdkpfGDxIvZn3IdVCuXIbsE7H9aB5uRZ+l/YDcYIPrMQ//NagZL7FbJjgXHxCiwh3olrS+OCIQLBW4u4gXYQmips+3cMoFExZeyT1WlLu0gX+KGWrj8miXPORqRHp5dcgWuHNW/+HwnyfGMEAsCivRuuB8aekS4iv4aSAj8X1RhBkt7XXnmlkEoUeCDr4kwxEnNuhbJsiEpGJTxdO2rx7SYf+/kJXjQ+vYJZd9K/5B/JmVahImT8WfN6a/hxfqAJxKDboLYF5zzWay8=
 	name = xutiancheng
@@ -24,6 +25,7 @@
 [diff]
 	colorMoved = zebra
 	tool = delta
+	algorithm = histogram
 [rebase]
 	autoStash = true
 [interactive]
@@ -55,3 +57,5 @@
 [maintenance]
 	auto = true
 	strategy = incremental
+[rerere]
+	enabled = true

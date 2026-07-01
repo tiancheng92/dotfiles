@@ -80,6 +80,8 @@ bindkey '^[^[' sudo-command-line
 # 补全缓存
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+# 新装的包立即生效，不用等 compinit 重新扫描 PATH
+zstyle ':completion:*' rehash true
 
 # 补全匹配：先精确匹配，再大小写不敏感，再部分词匹配
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
