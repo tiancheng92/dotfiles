@@ -45,6 +45,14 @@ out/
 *.test
 /tmp/
 
+# Python
+.env.local.*
+*.pyc
+__pycache__/
+.venv/
+.ruff_cache/
+.pytest_cache/
+
 # OS
 Thumbs.db
 ehthumbs.db

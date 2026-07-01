@@ -11,11 +11,11 @@ Host jms
     HostName jumpserver.yostar.net
     Port 2222
     User xutiancheng
-    StrictHostKeyChecking no
+    StrictHostKeyChecking accept-new
 
 Host jms_oversea
     HostName jumpserver.yo-star.com
     Port 2222
     User xutiancheng
     Compression yes
-    StrictHostKeyChecking no
+    StrictHostKeyChecking accept-new
