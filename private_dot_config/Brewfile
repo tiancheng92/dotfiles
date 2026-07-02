@@ -26,10 +26,14 @@ brew "gh"
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Render markdown on the CLI
+brew "glow"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Tool for glamorous shell scripts
 brew "gum"
+# Command-line benchmarking tool
+brew "hyperfine"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Mac App Store command-line interface
@@ -50,6 +54,8 @@ brew "rtk"
 brew "sd"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Very fast implementation of tldr in Rust
+brew "tealdeer"
 # User interface to the TELNET protocol
 brew "telnet"
 # Command-line unarchiving tools supporting multiple formats
