@@ -47,15 +47,14 @@ zinit wait lucid light-mode for \
   atinit'zicompinit; zicdreplay' \
       Aloxaf/fzf-tab \
       zdharma-continuum/fast-syntax-highlighting \
-  atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' \
+  atload'bindkey "^[[A" history-substring-search-up; bindkey "^[OA" history-substring-search-up; bindkey "^[[B" history-substring-search-down; bindkey "^[OB" history-substring-search-down' \
       zsh-users/zsh-history-substring-search \
   atload'_zsh_autosuggest_start' \
       zsh-users/zsh-autosuggestions \
       hlissner/zsh-autopair
 
-# fzf — 模糊搜索
-source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-source /opt/homebrew/opt/fzf/shell/completion.zsh
+# fzf — 模糊搜索（fzf ≥0.48 提供 --zsh，一行注入 key-bindings + completion）
+source <(fzf --zsh)
 
 # Ctrl+Delete 删词
 bindkey '^[[3;5~' kill-word
@@ -72,10 +71,6 @@ bindkey '^Y' _atuin_copy
 # Ctrl+Z 后台挂起（zle -N 注册避免 FSH unhandled widget 警告）
 zle -N suspend
 bindkey '^Z' suspend
-# ESC ESC 在行首加 sudo
-autoload -Uz sudo
-zle -N sudo-command-line
-bindkey '^[^[' sudo-command-line
 
 # 补全缓存
 zstyle ':completion:*' use-cache on
@@ -287,9 +282,10 @@ alias find='fd'                  # 更快更简洁的 find
 alias df='duf'                   # 可视化磁盘使用情况
 alias vi='vim'
 alias top='btop'
-function ping() { command ping "$@" | nali}
-function traceroute() { command traceroute "$@" | nali }
-function dig() { command dig "$@" | nali }
+# nali 做 IP 地理归属标注；未安装时退回原始命令，避免管道右侧报错吞掉输出
+function ping()       { (($+commands[nali])) && command ping "$@" | nali       || command ping "$@" }
+function traceroute() { (($+commands[nali])) && command traceroute "$@" | nali || command traceroute "$@" }
+function dig()        { (($+commands[nali])) && command dig "$@" | nali        || command dig "$@" }
 alias ps='procs'
 # yazi：退出后自动 cd 到 yazi 最后所在目录
 function y() {
