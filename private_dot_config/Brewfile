@@ -88,6 +88,8 @@ cask "cc-switch"
 cask "claude-code@latest"
 # Databases and SQL IDE
 cask "datagrip"
+# Database management tool
+cask "dbx"
 # Project management software
 cask "feishu"
 cask "font-jetbrains-maple-mono-nf"
@@ -104,9 +106,11 @@ cask "squirrel-app"
 cask "visual-studio-code"
 # Free messaging and calling application
 cask "wechat"
+mas "ConsoleRemote", id: 6738534883
 mas "Numbers表格", id: 361304891
 mas "Xnip", id: 1221250572
 vscode "anthropic.claude-code"
+vscode "cweijan.vscode-office"
 vscode "esbenp.prettier-vscode"
 vscode "github.github-vscode-theme"
 vscode "golang.go"

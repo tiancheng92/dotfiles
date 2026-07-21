@@ -305,7 +305,7 @@ alias mdcat='CLICOLOR_FORCE=1 glow --style=dark'  # 命令行直接渲染 markdo
 alias help='tldr'                                  # 命令速查（tealdeer）
 alias bench='hyperfine --warmup=3'                  # 命令行基准测试
 
-function port() { lsof -i ":$1" | nali }
+function port() { (($+commands[nali])) && lsof -i ":$1" | nali || lsof -i ":$1" }
 function mkcd() { mkdir -p "$1" && cd "$1" }
 function yoxh() {
   local session="$HOME/.local/share/xh/sessions/yo-star/ops.json"
