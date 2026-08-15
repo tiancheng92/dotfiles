@@ -229,9 +229,6 @@ function chezmoi-push() {
       "$HOME/.zshenv")
         print -P "%F{yellow}⚠ 跳过 .zshenv：请直接编辑 ~/.local/share/chezmoi/dot_zshenv.tmpl%f"
         continue ;;
-      "$HOME/.claude/settings.json")
-        print -P "%F{yellow}⚠ 跳过 settings.json：请直接编辑 ~/.local/share/chezmoi/dot_claude/private_settings.json.tmpl%f"
-        continue ;;
     esac
 
     if chezmoi re-add "$abs" 2>/dev/null; then
@@ -327,3 +324,4 @@ eval "$(starship init zsh)"              # 提示符
 eval "$(zoxide init zsh --cmd cd)"       # 智能 cd，学习访问历史
 eval "$(fnm env --use-on-cd --shell zsh --version-file-strategy=recursive --resolve-engines)" # Node.js 版本管理，切目录自动切换版本
 eval "$(atuin init zsh --disable-up-arrow)"                # shell 历史增强，保留上箭头原有行为
+export PATH="/Applications/ChatGPT.app/Contents/Resources:$PATH" # 优先使用 ChatGPT.app 内置 Codex CLI

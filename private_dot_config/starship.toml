@@ -1,7 +1,18 @@
-format = """$directory$git_branch$git_status$git_state
+format = """$os$directory$git_branch$git_status$git_state
 $character"""
 
 right_format = """$nodejs$golang$python$rust$cmd_duration"""
+
+[os]
+disabled = false
+format = "[$symbol](#blue) "
+
+[os.symbols]
+Ubuntu  = "󰕈"
+Artix   = "󰣇"
+Arch    = "󰣇"
+CachyOS = "󰣇"
+Macos   = ""
 
 [directory]
 style = "bold cyan"

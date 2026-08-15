@@ -82,12 +82,10 @@ cask "1password"
 cask "1password-cli"
 # Utility to add Dynamic Island like features to notch area
 cask "alcove"
-# Configuration manager for AI coding agents
-cask "cc-switch"
-# Terminal-based AI coding assistant
-cask "claude-code@latest"
-# Databases and SQL IDE
-cask "datagrip"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Database management tool
 cask "dbx"
 # Project management software
@@ -109,7 +107,6 @@ cask "wechat"
 mas "ConsoleRemote", id: 6738534883
 mas "Numbers表格", id: 361304891
 mas "Xnip", id: 1221250572
-vscode "anthropic.claude-code"
 vscode "cweijan.vscode-office"
 vscode "esbenp.prettier-vscode"
 vscode "github.github-vscode-theme"
@@ -125,5 +122,7 @@ go "github.com/golangci/golangci-lint/cmd/golangci-lint"
 go "golang.org/x/tools/gopls"
 go "github.com/vektra/mockery/v2"
 go "github.com/swaggo/swag/v2/cmd/swag"
+go "github.com/google/wire/cmd/wire"
 npm "@colbymchenry/codegraph"
+npm "@dbx-app/mcp-server"
 npm "@larksuite/cli"
