@@ -84,8 +84,6 @@ cask "1password-cli"
 cask "alcove"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
-# OpenAI's coding agent that runs in your terminal
-cask "codex"
 # Database management tool
 cask "dbx"
 # Project management software
