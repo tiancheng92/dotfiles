@@ -1,0 +1,162 @@
+model = "gpt-5.6-terra"
+model_provider = "custom"
+model_reasoning_effort = "medium"
+disable_response_storage = true
+notify = ["/Users/xutiancheng/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
+[model_providers.custom]
+name = "OpenAI"
+requires_openai_auth = true
+supports_websockets = true
+wire_api = "responses"
+
+[desktop]
+followUpQueueMode = "queue"
+selected-avatar-id = "custom:eva-rei"
+avatar-overlay-mascot-width-px = 80
+preventSleepWhileRunning = true
+dock-icon-preference = "codex-system"
+usePointerCursors = true
+show-context-window-usage = true
+composerPlainTextMode = true
+localeOverride = "zh-CN"
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh"]
+external-agent-import-sync-enabled = true
+
+[projects."/Users/xutiancheng/Code/yostar/tingyun"]
+trust_level = "trusted"
+
+[projects."/Users/xutiancheng"]
+trust_level = "trusted"
+
+[projects."/Users/xutiancheng/Documents/Codex/2026-08-15/wo"]
+trust_level = "trusted"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-08-15T14:10:47Z"
+source_type = "local"
+source = "/Users/xutiancheng/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-15T06:43:37Z"
+source_type = "local"
+source = "/Users/xutiancheng/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.ui-ux-pro-max-skill]
+last_updated = "2026-08-15T06:37:44Z"
+last_revision = "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5"
+source_type = "git"
+source = "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git"
+
+[marketplaces.ponytail]
+last_updated = "2026-08-15T06:37:40Z"
+last_revision = "2ed6c52c9d7e5e56942508591085fd45dea277d3"
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."ui-ux-pro-max@ui-ux-pro-max-skill"]
+enabled = true
+
+[plugins."ponytail@ponytail"]
+enabled = true
+
+[features]
+memories = true
+js_repl = false
+chronicle = false
+workspace_dependencies = true
+
+[shell_environment_policy.set]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/xutiancheng/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+
+[mcp_servers.context7]
+enabled = true
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.context7.http_headers]
+Authorization = "Bearer ctx7sk-746dfa5d-5dc0-450d-b52e-61a627fb98b7"
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/xutiancheng/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/xutiancheng/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.810.52044"
+SKY_CUA_SERVICE_PATH = "/Users/xutiancheng/.codex/computer-use/Codex Computer Use.app"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
+
+[mcp_servers.jina]
+enabled = true
+url = "https://mcp.jina.ai/v1"
+
+[mcp_servers.jina.http_headers]
+Authorization = "Bearer jina_e68f7358db274630a7d62cc3c7c41721YtvwdH7yvLotnr8gX1njIQPlnEo6"
+
+[mcp_servers.dbx]
+command = "/Users/xutiancheng/.local/share/fnm/node-versions/v26.3.1/installation/bin/node"
+args = ["/Users/xutiancheng/.local/share/fnm/node-versions/v26.3.1/installation/lib/node_modules/@dbx-app/mcp-server/bin/dbx-mcp-server.js"]
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[hooks.state]
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:session_start:0:0"]
+trusted_hash = "sha256:5f81d38f47448a1581c08ec877e044d9e04dd6f814dce3f2671f7a8edadd719b"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:6a6f42bc3b58d6262db38bfd74d7f340fcca2b09cdb134aad365063f0bfefca4"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:subagent_start:0:0"]
+trusted_hash = "sha256:1423b56c1322f96c8f74c51c1e7ae9a047b904c1fa43ee9165d462fd7a6e70ef"
