@@ -229,6 +229,9 @@ function chezmoi-push() {
       "$HOME/.zshenv")
         print -P "%F{yellow}⚠ 跳过 .zshenv：请直接编辑 ~/.local/share/chezmoi/dot_zshenv.tmpl%f"
         continue ;;
+      "$HOME/.codex/config.toml")
+        print -P "%F{yellow}⚠ 跳过 .codex/config.toml：请直接编辑 ~/.local/share/chezmoi/dot_codex/private_config.toml.tmpl%f"
+        continue ;;
     esac
 
     if chezmoi re-add "$abs" 2>/dev/null; then

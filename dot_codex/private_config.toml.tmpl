@@ -106,7 +106,7 @@ enabled = true
 url = "https://mcp.context7.com/mcp"
 
 [mcp_servers.context7.http_headers]
-Authorization = "Bearer ctx7sk-746dfa5d-5dc0-450d-b52e-61a627fb98b7"
+Authorization = "Bearer {{ onepasswordRead "op://Personal/Dev API Keys/Context7 API Key" }}"
 
 [mcp_servers.node_repl]
 args = []
@@ -140,7 +140,7 @@ enabled = true
 url = "https://mcp.jina.ai/v1"
 
 [mcp_servers.jina.http_headers]
-Authorization = "Bearer jina_e68f7358db274630a7d62cc3c7c41721YtvwdH7yvLotnr8gX1njIQPlnEo6"
+Authorization = "Bearer {{ onepasswordRead "op://Personal/Dev API Keys/Jina API Key" }}"
 
 [mcp_servers.dbx]
 command = "/Users/xutiancheng/.local/share/fnm/node-versions/v26.3.1/installation/bin/node"
