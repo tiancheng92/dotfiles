@@ -1,1 +1,7 @@
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+fi
+# /etc/zprofile 的 path_helper 会重排 PATH，最后恢复个人工具优先级。
+typeset -gU path PATH
+path=("${_zsh_preferred_path[@]}" "${path[@]}")
+export PATH
