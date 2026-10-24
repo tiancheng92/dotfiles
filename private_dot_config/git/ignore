@@ -7,52 +7,34 @@
 .AppleDouble
 .LSOverride
 
-# Editors
-.vscode/
-.idea/
+# Editor temporary files
 *.swp
 *.swo
 *~
-.cursor/
 
-# Claude Code
-.claude/
-CLAUDE.md
-
-# Environment
+# Local environment secrets (keep protection across repositories)
 .env
 .env.local
 .env.*.local
+.env.local.*
 
-# Logs
-*.log
+# Package-manager debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Dependencies
+# Local dependency and interpreter caches
 node_modules/
-vendor/
-
-# Build output
-dist/
-build/
-out/
-*.o
-*.a
-
-# Go
-*.test
-/tmp/
-
-# Python
-.env.local.*
-*.pyc
-__pycache__/
 .venv/
+__pycache__/
+*.pyc
 .ruff_cache/
 .pytest_cache/
 
-# OS
+# Windows
 Thumbs.db
 ehthumbs.db
+
+# Shared editor/AI configuration and ambiguous build/source directories
+# belong in each repository's .gitignore, according to its policy.
+# Repositories should also declare their own dependency/cache ignores.

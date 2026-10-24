@@ -14,7 +14,7 @@ cursor-style-blink = true
 
 adjust-cell-height = 20%
 
-scrollback-limit = 104857600
+scrollback-limit = 52428800
 
 shell-integration = detect
 shell-integration-features = true
@@ -40,7 +40,7 @@ font-feature = calt
 font-feature = liga
 font-thicken = true
 
-confirm-close-surface = false
+confirm-close-surface = true
 mouse-hide-while-typing = true
 
 keybind = cmd+n=ignore

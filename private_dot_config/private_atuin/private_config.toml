@@ -124,14 +124,15 @@ strip_trailing_whitespace = true
 ## For details on the supported regular expression syntax, see
 ## https://docs.rs/regex/latest/regex/#syntax
 history_filter = [
-  "^export .*=",
-  "^EDITOR=",
-  "^.*_KEY=",
-  "^.*_SECRET=",
-  "^.*_TOKEN=",
-  "^.*_PASSWORD=",
-  "^op read ",
-  "^op run ",
+  '^[ \t]',
+  '(?m)^[ \t]*export .*=',
+  '(?m)^[ \t]*EDITOR=',
+  '(?m)^.*_KEY=',
+  '(?m)^.*_SECRET=',
+  '(?m)^.*_TOKEN=',
+  '(?m)^.*_PASSWORD=',
+  '(?m)^[ \t]*op read ',
+  '(?m)^[ \t]*op run ',
 ]
 # history_filter = [
 #   "^secret-cmd",

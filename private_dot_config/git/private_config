@@ -24,7 +24,7 @@
 	prune = true
 [diff]
 	colorMoved = zebra
-	tool = delta
+	tool = vscode
 	algorithm = histogram
 	colorMovedWS = allow-indentation-change
 [rebase]
@@ -60,3 +60,7 @@
 	strategy = incremental
 [rerere]
 	enabled = true
+[difftool "vscode"]
+	cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false

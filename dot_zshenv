@@ -4,14 +4,11 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# 始终使用 chezmoi 管理的 Atuin 配置，不受旧 ~/.atuin/config.toml 遮蔽。
+export ATUIN_CONFIG_DIR="$XDG_CONFIG_HOME/atuin"
+
 # npm
 export npm_config_cache="$XDG_CACHE_HOME/npm"
-
-# Context7
-export CONTEXT7_API_KEY="{{ onepasswordRead "op://Personal/Dev API Keys/Context7 API Key" }}"
-
-# Jina AI
-export JINA_API_KEY="{{ onepasswordRead "op://Personal/Dev API Keys/Jina API Key" }}"
 
 # 编辑器
 export EDITOR="code --wait"
@@ -27,8 +24,6 @@ export LESS='-RFX --use-color -Dd+r -Du+b'
 # ripgrep
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/rc"
 
-export GOPATH="$XDG_DATA_HOME/go"                # Go 工作目录
-
 # PATH：所有 shell 可用；登录时在 path_helper/Homebrew 之后重新恢复优先级
 typeset -gU path PATH
 typeset -ga _zsh_preferred_path
@@ -37,6 +32,7 @@ _zsh_preferred_path=(
   "$HOME/.local/bin"
   "${GOPATH:-$HOME/go}/bin"
   /opt/homebrew/opt/curl/bin
+  /opt/homebrew/opt/rustup/bin
 )
 if [[ -x /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex ]]; then
   _zsh_preferred_path=(/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS "${_zsh_preferred_path[@]}")
