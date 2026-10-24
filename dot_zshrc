@@ -337,7 +337,7 @@ function update-all() {
     -n|--dry-run) dry_run=1 ;;
     -h|--help)
       print -r -- 'usage: update-all [-n|--dry-run]'
-      print -r -- 'Updates Homebrew, Zinit, Codegraph, gopls and Rust toolchains; regenerates ~/.config/Brewfile.'
+      print -r -- 'Updates Homebrew, Zinit, standalone Codegraph, uv tools, gopls and Rust toolchains; regenerates ~/.config/Brewfile.'
       return 0 ;;
     *) print -u2 -r -- 'usage: update-all [-n|--dry-run]'; return 2 ;;
   esac
@@ -360,12 +360,18 @@ function update-all() {
   {
     _ua_step "brew" brew-update || failed+=("brew")
     _ua_step "zinit" zinit-update || failed+=("zinit")
-    codegraph_bin=${commands[codegraph]:-}
-    [[ -x "$HOME/.local/bin/codegraph" ]] && codegraph_bin="$HOME/.local/bin/codegraph"
-    if [[ -n $codegraph_bin ]]; then
+    # Codegraph 只由官方独立安装器管理，避免再通过 npm 引入第二套。
+    codegraph_bin="$HOME/.local/bin/codegraph"
+    if [[ -x $codegraph_bin ]]; then
       _ua_step "codegraph" "$codegraph_bin" upgrade || failed+=("codegraph")
     else
-      print -r -- 'skip codegraph: not installed'
+      print -r -- 'skip codegraph: standalone CLI not installed at ~/.local/bin/codegraph'
+    fi
+    if (( $+commands[uv] )); then
+      # Homebrew 更新 uv 本身；这里更新 uv 隔离安装的 Python CLI。
+      _ua_step "uv tools" uv tool upgrade --all || failed+=("uv tools")
+    else
+      print -r -- 'skip uv tools: uv not installed'
     fi
     if (( $+commands[go] && $+commands[gopls] )); then
       gopls_bin=${commands[gopls]:A}

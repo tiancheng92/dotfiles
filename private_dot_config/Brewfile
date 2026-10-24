@@ -46,12 +46,12 @@ brew "mkcert"
 brew "mysql", restart_service: :changed
 # Tool for querying IP geographic information and CDN provider
 brew "nali"
-# Execute binaries from Python packages in isolated environments
-brew "pipx"
 # Modern replacement for ps written in Rust
 brew "procs"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.14"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.15"
 # Persistent key-value database, with built-in net interface
 brew "redis", restart_service: :changed
 # Search tool like grep and The Silver Searcher
@@ -129,4 +129,3 @@ vscode "pkief.material-icon-theme"
 vscode "redhat.vscode-yaml"
 vscode "vue.volar"
 go "golang.org/x/tools/gopls"
-npm "@colbymchenry/codegraph"

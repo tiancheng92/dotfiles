@@ -37,6 +37,24 @@ chezmoi apply
 brew bundle --file="$HOME/.config/Brewfile"
 ```
 
+Codegraph 统一使用[官方独立安装器](https://github.com/colbymchenry/codegraph#1-install-the-cli)，自带运行时，安装到 `~/.codegraph`，入口为 `~/.local/bin/codegraph`。Brewfile 不再声明 npm 版；新机器完成上面的步骤后，再安装独立 CLI：
+
+```sh
+# 只在独立 CLI 尚未安装时执行；已有安装用 codegraph upgrade 更新
+if [ ! -x "$HOME/.local/bin/codegraph" ]; then
+  (
+    set -eu
+    installer=$(mktemp)
+    trap 'rm -f "$installer"' EXIT
+    curl -fsSL https://raw.githubusercontent.com/colbymchenry/codegraph/main/install.sh -o "$installer"
+    sh "$installer"
+  )
+fi
+"$HOME/.local/bin/codegraph" --version
+```
+
+新机器如需连接 AI 客户端，再运行 `codegraph install` 选择目标客户端；项目是否建立索引由各项目自行决定。不要再通过 npm/yarn 全局安装 Codegraph，避免出现重复 shim。
+
 打开新终端后，Zinit 会安装缺少的插件。Node.js 由 fnm 管理；非交互任务如需 Node.js，应在任务中显式选择版本，例如 `fnm exec --using=<version> node ...`。
 
 API 凭据由各工具自己的凭据机制提供，不写入或全局导出到 `.zshenv`。恢复配置不需要通过 1Password CLI 渲染 shell 密钥。
@@ -64,7 +82,7 @@ update-all
 
 `.zshenv` 现在对应普通源文件 `dot_zshenv`，可直接 `chezmoi re-add`。如果以后新增包含秘密的模板，仍应直接编辑模板，不把渲染后的凭据加入仓库。
 
-`update-all` 优先通过 `~/.local/bin/codegraph upgrade` 更新独立 Codegraph，并对已安装工具执行 `go install golang.org/x/tools/gopls@latest` 和 `rustup update --no-self-update`。交互 shell 中的 `~/.local/bin` 同样优先于 fnm 的全局包 shim，Node 版本仍由 fnm 管理。gopls 更新到当前可执行文件所在目录，Homebrew 管理的 gopls 则跳过；Rust 只更新已安装工具链，rustup 本身仍由 Homebrew 管理。未安装的工具会跳过，不自动新增 CLI。RTK、uv、Atuin 等继续由 Homebrew 更新。某一步失败会继续其余步骤，最后汇总失败项并返回非零状态。
+`update-all` 只通过 `~/.local/bin/codegraph upgrade` 更新独立 Codegraph，并对已安装工具执行 `uv tool upgrade --all`、`go install golang.org/x/tools/gopls@latest` 和 `rustup update --no-self-update`。交互 shell 中的 `~/.local/bin` 优先于 fnm 路径，Node 版本仍由 fnm 管理。gopls 更新到当前可执行文件所在目录，Homebrew 管理的 gopls 则跳过；Rust 只更新已安装工具链，rustup 本身仍由 Homebrew 管理。未安装的工具会跳过，不自动新增 CLI。RTK、uv 本体、Atuin 等继续由 Homebrew 更新。某一步失败会继续其余步骤，最后汇总失败项并返回非零状态。
 
 `zinit-update` 从磁盘安装目录枚举插件，包括尚未延迟加载的插件；仅 self-update 一次，然后逐个调用 Zinit 更新以保留原生 hooks。临时 Git 包装器额外捕获 fetch/pull 等失败，弥补上游丢失退出状态的问题；不自动删除任何插件。未来若自定义 hook 自行忽略错误，仍需由该 hook 保证正确返回状态。
 
@@ -77,3 +95,18 @@ Ctrl+Y 使用 NUL 分隔完整历史记录，支持多行复制。输入行中�
 全局 Git ignore 保留系统临时文件、明确的依赖缓存和已有 `.env` 保护；团队配置、`vendor`、`dist`、`build` 等由项目 `.gitignore` 决定。项目也应自行声明依赖忽略规则，避免依赖个人全局配置。
 
 ripgrep 默认仍尊重 Git ignore。排查被忽略的源码或产物时使用 `rg --no-config --no-ignore`，如需隐藏文件再加 `--hidden`，并限定检索目录。
+
+### Python 工具管理
+
+Python CLI 统一使用 [uv tools](https://docs.astral.sh/uv/guides/tools/)，不再安装 pipx。长期使用的工具用 `uv tool install <package>`，临时调用用 `uvx <command>`；查看、更新和移除分别用 `uv tool list`、`uv tool upgrade --all`、`uv tool uninstall <package>`。项目依赖放在项目自己的虚拟环境中，已有项目遵循原来的依赖约定，不安装到全局 Python。
+
+当前没有需要迁移的 pipx/uv 工具。以后安装长期 CLI 后，可重新生成并同步清单：
+
+```sh
+brew bundle dump --file="$HOME/.config/Brewfile" --force --quiet
+chezmoi re-add "$HOME/.config/Brewfile"
+```
+
+[Homebrew Bundle 支持 uv 工具](https://docs.brew.sh/Brew-Bundle-and-Brewfile#types)，会生成 `uv "<package>"` 条目，恢复时由 `brew bundle` 调用 uv 安装。带额外依赖、特殊参数或版本约束的工具，应另外记录原始安装命令；Brewfile 不是版本锁文件。
+
+Python 解释器仍由 Homebrew 提供：保留现用默认 Python 3.15 和已有 Python 3.14，两者均显式列入 Brewfile。3.15 已标记为手动安装，避免移除 pipx 后被 `brew autoremove` 当作孤立依赖删除。需要特定版本时，在项目/工具命令中显式指定，例如 `uv tool install --python 3.14 <package>`。
